@@ -35,7 +35,7 @@ exports.ast_squeeze_more = ast_squeeze_more;
 })( squeezemore );
 
 //global.squeezemore = squeezemore;
-global.process.ast_squeeze_more = squeezemore;
+global.process.ast_squeeze_more = squeezemore.ast_squeeze_more;
 
 })( this );
 //>> End Uglifui
