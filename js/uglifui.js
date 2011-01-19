@@ -34,6 +34,8 @@
       this.elements.ta_code = $('#code');
       // The form element
       this.elements.frm_uglify = $('#ugForm');
+      // List of flags
+      this.elements.ul_flags = $('#flagList');
     },
 
     getCode : function () {
@@ -41,18 +43,37 @@
     },
 
     getFlags : function () {
-      return [];
+      var flags = [],
+          linelen = $('#max-line-len'),
+          lineval = global.parseInt( $('#linelen').val(), 10 );
+
+      // Loop through and add the correct flags
+      this.elements.ul_flags.find(':checked:not(#max-line-len)').each(function ( key, elem ) {
+        flags.push( '--' + elem.id );
+      });
+
+      // Special case for line len (with a sane minimum)
+      if ( linelen.is( ':checked' ) && lineval > 3 ) {
+        flags.push( '--max-line-len' );
+        flags.push( lineval + "" );
+      }
+
+      return flags;
     },
 
     submit : function () {
-      this.elements.ta_code.val( uglify( this.getCode(), this.getFlags() ) );
+      var code = this.getCode(),
+          flags = this.getFlags();
+      console.log( code, flags );
+      this.elements.ta_code.val( uglify( code, flags ) );
     },
 
     hookEvents : function () {
       var self = this;
 
       // Hook up the submit event
-      this.elements.frm_uglify.submit(function (){
+      this.elements.frm_uglify.submit(function ( e ) {
+        e.preventDefault();
         self.submit();
         return false;                             
       });

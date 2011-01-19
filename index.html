@@ -9,8 +9,47 @@
     <h1>UglifUI</h1>
     <form id="ugForm" action="" method="GET">
       <fieldset>
+        <div id="flagContainer">
+          <h3>Flags</h3>
+          <ul id="flagList">
+            <li>
+              <label for="no-mangle">No Mangle</label>
+              <input type="checkbox" id="no-mangle" name="no-mangle" />
+            </li>
+            <li>
+              <label for="no-squeeze">No Squeeze</label>
+              <input type="checkbox" id="no-squeeze" name="no-squeeze" />
+            </li>
+            <li>
+              <label for="mangle-toplevel">Mangle Top-Level</label>
+              <input type="checkbox" id="mangle-toplevel" name="mangle-toplevel" />
+            </li>
+            <li>
+              <label for="no-seqs">No Sequences</label>
+              <input type="checkbox" id="no-seqs" name="no-seqs" />
+            </li>
+            <li>
+              <label for="no-dead-code">No Dead Code</label>
+              <input type="checkbox" id="no-dead-code" name="no-dead-code" />
+            </li>
+            <li>
+              <label for="no-copyright">No Copyright</label>
+              <input type="checkbox" id="no-copyright" name="no-copyright" /></li>
+            <li>
+              <label for="extra">Extra</label>
+              <input type="checkbox" id="extra" name="extra" checked="checked" /></li>
+            <li>
+              <label for="unsafe">Unsafe</label>
+              <input type="checkbox" id="unsafe" name="unsafe" checked="checked" /></li>
+            <li>
+              <label for="max-line-len">Max Line Len</label>
+              <input type="checkbox" id="max-line-len" name="max-line-len" />
+              <input type="number" id="linelen" name="linelen" />
+            </li>
+          </ul>
+        </div>
         <label for="code">Code</label><br />
-        <textarea rows="20" cols="105" id="code"></textarea>
+        <textarea rows="20" cols="105" id="code">(function( global ){ var lol = 5; lol = lol.toString(); })();</textarea>
         <br />
         <input type="submit" id="uglify" value="Uglify" />
       </fieldset>
