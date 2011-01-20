@@ -64,7 +64,6 @@
     submit : function () {
       var code = this.getCode(),
           flags = this.getFlags();
-      console.log( code, flags );
       this.elements.ta_code.val( uglify( code, flags ) );
     },
 

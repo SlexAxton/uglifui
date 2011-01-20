@@ -257,7 +257,6 @@ function is_token(token, type, val) {
 var EX_EOF = {};
 
 function tokenizer($TEXT, skip_comments) {
-console.log($TEXT);
         var S = {
                 text           : $TEXT.replace(/\r\n?|[\n\u2028\u2029]/g, "\n").replace(/^\uFEFF/, ''),
                 pos            : 0,
