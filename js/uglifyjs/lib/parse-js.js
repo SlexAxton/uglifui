@@ -1173,7 +1173,11 @@ function parse($TEXT, strict_mode, embed_tokens) {
                 try {
                         ++S.in_loop;
                         return cont();
-                } finally {
+                }
+                //>> Start Uglifui
+                catch (e) {}
+                //>> End Uglifui
+                finally {
                         --S.in_loop;
                 }
         };

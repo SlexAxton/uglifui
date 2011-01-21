@@ -211,7 +211,6 @@ function squeeze_it(code) {
                 sys.debug(sys.inspect(ex));
                 sys.debug(JSON.stringify(ex));
 */
-                //global.console.debug( ex );
           //>> End Uglifui
 
         }

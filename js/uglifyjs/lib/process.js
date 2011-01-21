@@ -224,7 +224,11 @@ function ast_walker(ast) {
                         }
                         gen = walkers[type];
                         return gen.apply(ast, ast.slice(1));
-                } finally {
+                } 
+                //>> Start Uglifui
+                catch (e) {}
+                //>> End Uglifui
+                finally {
                         stack.pop();
                 }
         };
@@ -1058,7 +1062,6 @@ var DOT_CALL_NO_PARENS = jsp.array_to_hash([
 
 function make_string(str) {
         var dq = 0, sq = 0;
-        console.log(str);
         str = str.replace(/[\\\b\f\n\r\t\x22\x27]/g, function(s){
                 switch (s) {
                     case "\\": return "\\\\";
@@ -1102,6 +1105,9 @@ function gen_code(ast, beautify) {
                 if (incr == null) incr = 1;
                 indentation += incr;
                 try { return cont.apply(null, slice(arguments, 1)); }
+                //>> Start Uglifui
+                catch (e) {}
+                //>> End Uglifui
                 finally { indentation -= incr; }
         };
 
