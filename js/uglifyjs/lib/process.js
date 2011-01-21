@@ -730,7 +730,7 @@ function ast_squeeze(ast, options) {
         // 4. transform consecutive statements using the comma operator
         // 5. if block_type == "lambda" and it detects constructs like if(foo) return ... - rewrite like if (!foo) { ... }
         function tighten(statements, block_type) {
-                statements = statements.reduce(function(a, stat){
+                statements = _(statements).reduce(function(a, stat){
                         if (stat[0] == "block") {
                                 if (stat[1]) {
                                         a.push.apply(a, stat[1]);
@@ -745,7 +745,7 @@ function ast_squeeze(ast, options) {
                         // Detightening things. We do this because then we can assume that the
                         // statements are structured in a specific way.
                         statements = (function(a, prev) {
-                                statements.forEach(function(cur) {
+                                _(statements).forEach(function(cur) {
                                         switch (cur[0]) {
                                             case "for":
                                                 if (cur[1] != null) {
@@ -756,7 +756,7 @@ function ast_squeeze(ast, options) {
                                                 break;
                                             case "stat":
                                                 var stats = make_seq_to_statements(cur[1]);
-                                                stats.forEach(function(s) {
+                                                _(stats).forEach(function(s) {
                                                         if (s[1][0] == "unary-postfix")
                                                                 s[1][0] = "unary-prefix";
                                                 });
@@ -770,7 +770,7 @@ function ast_squeeze(ast, options) {
                         })([]);
 
                         statements = (function(a, prev) {
-                                statements.forEach(function(cur) {
+                                _(statements).forEach(function(cur) {
                                         if (!(prev && prev[0] == "stat")) {
                                                 a.push(cur);
                                                 prev = cur;
@@ -800,7 +800,7 @@ function ast_squeeze(ast, options) {
                 }
 
                 statements = (function(a, prev){
-                        statements.forEach(function(cur){
+                        _(statements).forEach(function(cur){
                                 if (prev && ((cur[0] == "var" && prev[0] == "var") ||
                                              (cur[0] == "const" && prev[0] == "const"))) {
                                         prev[1] = prev[1].concat(cur[1]);
@@ -813,7 +813,7 @@ function ast_squeeze(ast, options) {
                 })([]);
 
                 if (options.dead_code) statements = (function(a, has_quit){
-                        statements.forEach(function(st){
+                        _(statements).forEach(function(st){
                                 if (has_quit) {
                                         if (member(st[0], [ "function", "defun" , "var", "const" ])) {
                                                 a.push(st);
@@ -831,7 +831,7 @@ function ast_squeeze(ast, options) {
                 })([]);
 
                 if (options.make_seqs) statements = (function(a, prev) {
-                        statements.forEach(function(cur){
+                        _(statements).forEach(function(cur){
                                 if (prev && prev[0] == "stat" && cur[0] == "stat") {
                                         prev[1] = [ "seq", prev[1], cur[1] ];
                                 } else {
@@ -844,7 +844,7 @@ function ast_squeeze(ast, options) {
 
                 if (options.extra) {
                         statements = (function(a, prev){
-                                statements.forEach(function(cur){
+                                _(statements).forEach(function(cur){
                                         var replaced = false;
                                         if (prev && cur[0] == "for" && cur[1] == null && (prev[0] == "var" || prev[0] == "const" || prev[0] == "stat")) {
                                                 cur[1] = prev;
@@ -1553,7 +1553,7 @@ function split_lines(code, max_line_length) {
                         }
                 }
         }
-        return splits.map(function(pos, i){
+        return _(splits).map(function(pos, i){
                 return code.substring(pos, splits[i + 1] || code.length);
         }).join("\n");
 };
