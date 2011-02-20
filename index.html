@@ -4,58 +4,170 @@
     <meta charset=utf-8 />
     <title>Uglifui</title>
     <link rel="stylesheet" href="css/main.css" media="all" />
+    
   </head>
   <body>
     <h1>UglifUI</h1>
     <form id="ugForm" action="" method="GET">
       <fieldset>
         <div id="flagContainer">
-          <h3>Flags</h3>
+          <h3>Flags <sup><a href="#docs">?</a></sup></h3>
           <ul id="flagList">
             <li>
-              <label for="no-mangle">No Mangle</label>
+              <label for="no-mangle"><abbr title="don't mangle variable names">No Mangle</abbr></label>
               <input type="checkbox" id="no-mangle" name="no-mangle" />
             </li>
             <li>
-              <label for="no-squeeze">No Squeeze</label>
+              <label for="no-squeeze"><abbr title="don't call ast_squeeze() (which does various optimizations that result in smaller, less readable code)">No Squeez</abbr>e</label>
               <input type="checkbox" id="no-squeeze" name="no-squeeze" />
             </li>
             <li>
-              <label for="mangle-toplevel">Mangle Top-Level</label>
+              <label for="mangle-toplevel"><abbr title="mangle names in the top level scope too">Mangle Top-Level</abbr></label>
               <input type="checkbox" id="mangle-toplevel" name="mangle-toplevel" />
             </li>
             <li>
-              <label for="no-seqs">No Sequences</label>
+              <label for="no-seqs"><abbr title="will not reduce consecutive statements in blocks into a comma-deliminated sequence">No Sequences</abbr></label>
               <input type="checkbox" id="no-seqs" name="no-seqs" />
             </li>
             <li>
-              <label for="no-dead-code">No Dead Code</label>
+              <label for="no-dead-code"><abbr title="keep code that is obviously unreachable">No Dead Code</abbr></label>
               <input type="checkbox" id="no-dead-code" name="no-dead-code" />
             </li>
             <li>
-              <label for="no-copyright">No Copyright</label>
+              <label for="no-copyright"><abbr title="remove the initial comment tokens in the generated code (assumed to be copyright information etc.)">No Copyright</abbr></label>
               <input type="checkbox" id="no-copyright" name="no-copyright" /></li>
             <li>
-              <label for="extra">Extra</label>
+              <label for="extra"><abbr title="enable additional optimizations that have not yet been extensively tested. These might, or might not, break your code">Extra</abbr></label>
               <input type="checkbox" id="extra" name="extra" checked="checked" /></li>
             <li>
-              <label for="unsafe">Unsafe</label>
+              <label for="unsafe"><abbr title="enable other additional optimizations that are known to be unsafe in some contrived situations, but could still be generally useful">Unsafe</abbr></label>
               <input type="checkbox" id="unsafe" name="unsafe" checked="checked" /></li>
             <li>
-              <label for="max-line-len">Max Line Len</label>
+              <label for="max-line-len"><abbr title="add a newline after around X characters">Max Line Len</abbr></label>
               <input type="checkbox" id="max-line-len" name="max-line-len" />
+              <br>
               <input type="number" id="linelen" name="linelen" />
             </li>
           </ul>
         </div>
-        <label for="code">Code</label><br />
-        <textarea rows="20" cols="105" id="code">(function( global ){ var lol = 5; lol = lol.toString(); })();</textarea>
-        <br />
-        <input type="submit" id="uglify" value="Uglify" />
+        <div id="codeContainer">
+          <h3><label for="code">Code</label></h3>
+          <textarea rows="20" cols="105" id="code">(function( global ){ var lol = 5; lol = lol.toString(); })();</textarea>
+        
+          <input type="submit" id="uglify" value="Uglify" />
+        </div>
       </fieldset>
     </form>
 
+
+  <div id="docs">
+    <h3>Docs</h3>
+    
+    <ul>
+    <li>
+    <code>-b</code> or <code>--beautify</code> &mdash; output indented code; when passed, additional
+    options control the beautifier:
+
+    <ul>
+    <li>
+    <code>-i N</code> or <code>--indent N</code> &mdash; indentation level (number of spaces)
+
+    </li>
+    <li>
+    <code>-q</code> or <code>--quote-keys</code> &mdash; quote keys in literal objects (by default,
+    only keys that cannot be identifier names will be quotes).
+
+    </li>
+    </ul>
+    </li>
+    <li>
+    <code>-nm</code> or <code>--no-mangle</code> &mdash; don't mangle variable names
+
+    </li>
+    <li>
+    <code>-ns</code> or <code>--no-squeeze</code> &mdash; don't call <code>ast_squeeze()</code> (which does various
+    optimizations that result in smaller, less readable code).
+
+    </li>
+    <li>
+    <code>-mt</code> or <code>--mangle-toplevel</code> &mdash; mangle names in the toplevel scope too
+    (by default we don't do this).
+
+    </li>
+    <li>
+    <code>--no-seqs</code> &mdash; when <code>ast_squeeze()</code> is called (thus, unless you pass
+    <code>--no-squeeze</code>) it will reduce consecutive statements in blocks into a
+    sequence.  For example, "a = 10; b = 20; foo();" will be written as
+    "a=10,b=20,foo();".  In various occasions, this allows us to discard the
+    block brackets (since the block becomes a single statement).  This is ON
+    by default because it seems safe and saves a few hundred bytes on some
+    libs that I tested it on, but pass <code>--no-seqs</code> to disable it.
+
+    </li>
+    <li>
+    <code>--no-dead-code</code> &mdash; by default, UglifyJS will remove code that is
+    obviously unreachable (code that follows a <code>return</code>, <code>throw</code>, <code>break</code> or
+    <code>continue</code> statement and is not a function/variable declaration).  Pass
+    this option to disable this optimization.
+
+    </li>
+    <li>
+    <code>-nc</code> or <code>--no-copyright</code> &mdash; by default, <code>uglifyjs</code> will keep the initial
+    comment tokens in the generated code (assumed to be copyright information
+    etc.).  If you pass this it will discard it.
+
+    </li>
+    <li>
+    <code>-o filename</code> or <code>--output filename</code> &mdash; put the result in <code>filename</code>.  If
+    this isn't given, the result goes to standard output (or see next one).
+
+    </li>
+    <li>
+    <code>--overwrite</code> &mdash; if the code is read from a file (not from STDIN) and you
+    pass <code>--overwrite</code> then the output will be written in the same file.
+
+    </li>
+    <li>
+    <code>--ast</code> &mdash; pass this if you want to get the Abstract Syntax Tree instead
+    of JavaScript as output.  Useful for debugging or learning more about the
+    internals.
+
+    </li>
+    <li>
+    <code>-v</code> or <code>--verbose</code> &mdash; output some notes on STDERR (for now just how long
+    each operation takes).
+
+    </li>
+    <li>
+    <code>--extra</code> &mdash; enable additional optimizations that have not yet been
+    extensively tested.  These might, or might not, break your code.  If you
+    find a bug using this option, please report a test case.
+
+    </li>
+    <li>
+    <code>--unsafe</code> &mdash; enable other additional optimizations that are known to be
+    unsafe in some contrived situations, but could still be generally useful.
+    For now only this:
+
+    <ul>
+    <li>
+    foo.toString()  ==&gt;  foo+""
+
+    </li>
+    </ul>
+    </li>
+    <li>
+    <code>--max-line-len</code> (default 32K characters) &mdash; add a newline after around
+    32K characters.  I've seen both FF and Chrome croak when all the code was
+    on a single line of around 670K.  Pass &ndash;max-line-len 0 to disable this
+    safety feature.
+    </li>
+    </ul>
+  </div>
+
+
     <script src="js/underscore-min.js"></script>
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/uglifyjs/lib/parse-js.js"></script>
     <script src="js/uglifyjs/lib/process.js"></script>

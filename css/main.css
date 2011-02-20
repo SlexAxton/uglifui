@@ -10,6 +10,119 @@ table, th, td {vertical-align:middle;}
 blockquote:before, blockquote:after, q:before, q:after {content:'';}
 blockquote, q {quotes:"" "";}
 a img {border:none;}
-:focus {outline:0;}
 
 /* Uglifui */
+
+
+
+html { font-family: "Lucida Grande","Trebuchet MS",sans-serif; font-size: 12pt; margin: 20px;}
+body { }
+.title  { text-align: center; }
+.todo   { color: red; }
+.done   { color: green; }
+.tag    { background-color:lightblue; font-weight:normal }
+.target { }
+.timestamp { color: grey }
+.timestamp-kwd { color: CadetBlue }
+p.verse { margin-left: 3% }
+pre, textarea {
+  border: 1pt solid #AEBDCC;
+  background-color: #F3F5F7;
+  padding: 5pt;
+  font-family: monospace;
+  font-size: 90%;
+  overflow:auto;
+}
+pre.src {
+  background-color: #333; color: #ffd; border: 1px solid #000;
+}
+table { border-collapse: collapse; }
+td, th { vertical-align: top; }
+dt { font-weight: bold; }
+div.figure { padding: 0.5em; }
+div.figure p { text-align: center; }
+.linenr { font-size:smaller }
+.code-highlighted {background-color:#ffff00;}
+.org-info-js_info-navigation { border-style:none; }
+#org-info-js_console-label { font-size:10px; font-weight:bold;
+  white-space:nowrap; }
+.org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+  font-weight:bold; }
+
+sup {
+  vertical-align: baseline;
+  position: relative;
+  top: -0.5em;
+  font-size: 80%;
+}
+
+sup a:link, sup a:visited {
+  text-decoration: none;
+  color: #c00;
+}
+
+sup a:before { content: "["; color: #999; }
+sup a:after { content: "]"; color: #999; }
+
+h1.title { border-bottom: 4px solid #000; padding-bottom: 5px; margin-bottom: 2em; }
+
+#postamble {
+  color: #777;
+  font-size: 90%;
+  padding-top: 1em; padding-bottom: 1em; border-top: 1px solid #999;
+  margin-top: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+  text-align: right;
+}
+
+#postamble p { margin: 0; }
+
+#footnotes { border-top: 1px solid #000; }
+
+h1 { font-size: 200% }
+h2 { font-size: 175% }
+h3 { font-size: 150% }
+h4 { font-size: 125% }
+
+h1, h2, h3, h4 { font-family: "Bookman",Georgia,"Times New Roman",serif; font-weight: normal; }
+
+@media print {
+  html { font-size: 11pt; }
+}
+
+h1 { margin-bottom: 15px; }
+#flagContainer, #codeContainer { float: left; margin-right: 15px;}
+
+
+label { cursor: pointer; }
+
+li { list-style-type: none; border-radius: 3px; padding: 2px 5px;}
+li:hover { background-color: #eee;}
+li label { display: inline-block; width: 175px;}
+
+textarea { display:block;}
+textarea:focus { border: 1pt solid hsl(210, 23%, 37%); background-color: hsl(210, 20%, 97%);}
+
+input[type="submit"] { font-size: 28px;  }
+
+abbr[title] { border-bottom: 1px dotted; cursor: help;}
+
+code { font-family: monospace; background: #eee; padding: 0 2px; border-radius: 1px; }
+sup { font-size: 80%; }
+#docs { display:none; }
+#docs:target { display:block;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
