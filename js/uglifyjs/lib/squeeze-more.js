@@ -4,7 +4,6 @@
 var jsp = global.parsejs, //require("./parse-js"),
     pro = global.process, //require("./process"),
 //>> End Uglifui
-
     slice = jsp.slice,
     member = jsp.member,
     PRECEDENCE = jsp.PRECEDENCE,
@@ -28,9 +27,7 @@ function ast_squeeze_more(ast) {
 var squeezemore = {};
 (function ( exports ) {
 //>> End Uglifui
-
 exports.ast_squeeze_more = ast_squeeze_more;
-
 //>> Start Uglifui
 })( squeezemore );
 
