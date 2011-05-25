@@ -145,7 +145,7 @@ var OPERATOR_CHARS = array_to_hash(characters("+-*&%=<>!?|~^"));
 
 var RE_HEX_NUMBER = /^0x[0-9a-f]+$/i;
 var RE_OCT_NUMBER = /^0[0-7]+$/;
-var RE_DEC_NUMBER = /^\d*\.?\d*(?:e[+-]?\d*(?:\d\.?|\.?\d)\d*)?$/i;
+var RE_DEC_NUMBER = /^\d*\.?\d*(?:e[+\-]?\d*(?:\d\.?|\.?\d)\d*)?$/i;
 
 var OPERATORS = array_to_hash([
         "in",
@@ -274,7 +274,8 @@ JS_Parse_Error.prototype.toString = function() {
 };
 
 function js_error(message, line, col, pos) {
-        throw new JS_Parse_Error(message, line, col, pos);
+        //throw new JS_Parse_Error(message, line, col, pos);
+        console.log(message, line, col, pos);
 };
 
 function is_token(token, type, val) {
@@ -411,7 +412,7 @@ function tokenizer($TEXT) {
                     case "b" : return "\b";
                     case "v" : return "\v";
                     case "f" : return "\f";
-                    case "0" : return "\0";
+                    case "0" : return "\u0000";
                     case "x" : return String.fromCharCode(hex_bytes(2));
                     case "u" : return String.fromCharCode(hex_bytes(4));
                     default  : return ch;

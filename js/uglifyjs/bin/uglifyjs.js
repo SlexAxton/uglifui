@@ -182,7 +182,7 @@ function squeeze_it(code) {
                 }
                 result += show_copyright(initial_comments);
         }
-        try {
+        //try {
                 var ast = time_it("parse", function(){ return jsp.parse(code); });
                 if (options.mangle)
                         ast = time_it("mangle", function(){ return pro.ast_mangle(ast, options.mangle_toplevel); });
@@ -204,7 +204,7 @@ function squeeze_it(code) {
                         result = time_it("split", function(){ return pro.split_lines(result, options.max_line_length) });
                 }
                 return result;
-        } catch(ex) {
+        //} catch(ex) {
           //>> Start Uglifui
 /*
                 sys.debug(ex.stack);
@@ -213,7 +213,7 @@ function squeeze_it(code) {
 */
           //>> End Uglifui
 
-        }
+        //}
 };
 
 function time_it(name, cont) {
